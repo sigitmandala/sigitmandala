@@ -1,0 +1,94 @@
+version: 2.1
+
+orbs:
+  windows: circleci/windows@5.0.0
+
+jobs:
+  build-x64:
+    executor:
+      name: windows/server-2022
+      size: large
+    steps:
+      - checkout
+      - run:
+          name: Initialize vcpkg
+          command: |
+            Set-Executionpolicy -Executionpolicy Bypass
+            Install-Module -Name Pester -Force -SkipPublisherCheck
+            .\vcpkgv.ps1
+      - run:
+          name: Modify Visual Studio
+          command: |
+            .\timeout.ps1
+      - run:
+          name: Build solution
+          command: |
+            echo "Done..."
+  build-x86:
+    executor:
+      name: windows/server-2022
+      size: large
+    steps:
+      - checkout
+      - run:
+          name: Initialize vcpkg
+          command: |
+            Set-Executionpolicy -Executionpolicy Bypass
+            Install-Module -Name Pester -Force -SkipPublisherCheck
+            .\vcpkgv.ps1
+      - run:
+          name: Modify Visual Studio
+          command: |
+            .\timeout.ps1
+      - run:
+          name: Build solution
+          command: |
+            echo "Done..."
+  build-arm:
+    executor:
+      name: windows/server-2022
+      size: large
+    steps:
+      - checkout
+      - run:
+          name: Initialize vcpkg
+          command: |
+            Set-Executionpolicy -Executionpolicy Bypass
+            Install-Module -Name Pester -Force -SkipPublisherCheck
+            .\vcpkgv.ps1
+      - run:
+          name: Modify Visual Studio
+          command: |
+            .\timeout.ps1
+      - run:
+          name: Build solution
+          command: |
+            echo "Done..."
+  build-arm64:
+    executor:
+      name: windows/server-2022
+      size: large
+    steps:
+      - checkout
+      - run:
+          name: Initialize vcpkg
+          command: |
+            Set-Executionpolicy -Executionpolicy Bypass
+            Install-Module -Name Pester -Force -SkipPublisherCheck
+            .\vcpkgv.ps1
+      - run:
+          name: Modify Visual Studio
+          command: |
+            .\timeout.ps1
+      - run:
+          name: Build solution
+          command: |
+            echo "Done..."
+
+workflows:
+  Build:
+    jobs:
+      - build-x64
+      - build-x86
+      - build-arm
+      - build-arm64
